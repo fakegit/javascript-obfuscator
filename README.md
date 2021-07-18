@@ -45,7 +45,7 @@ The example of obfuscated code: [github.com](https://github.com/javascript-obfus
 * (OpenCollective) https://opencollective.com/javascript-obfuscator
 * PayPal credit card [https://www.paypal.com/donate](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=javascript-obfuscator@yandex.ru&lc=US&no_note=0&item_name=Support+javascript-obfuscator&cn=&curency_code=USD&bn=PP-DonationsBF:btn_donateCC_LG.gif:NonHosted)
 * PayPal https://www.paypal.me/javascriptobfuscator
-* (Bitcoin) 1Nv2773RDNzodHDxuxaYkTvwBkYRHmPhnG
+* (Bitcoin) bc1q203p8nyrstwm7vwzjg3h9l9t6y9ka0umw0rx96
 
 Huge thanks to all supporters!
 
@@ -1281,8 +1281,8 @@ Type: `string` Default: `variable`
 Allows to select a type of the wrappers that are appending by the `stringArrayWrappersCount` option.
 
 Available values:
-* `'variable'`: appends variable wrappers. Fast performance.
-* `'function'`: appends function wrappers. Slower performance than with `variable` but provides more strict obfuscation
+* `'variable'`: appends variable wrappers at the top of each scope. Fast performance.
+* `'function'`: appends function wrappers at random positions inside each scope. Slower performance than with `variable` but provides more strict obfuscation.
 
 Highly recommended to use `function` wrappers for higher obfuscation when a performance loss doesn't have a high impact on an obfuscated application.
 
@@ -1304,9 +1304,6 @@ const a = [
     'bar',
     'foo'
 ];
-const d = function (c, g) {
-    return b(g - 0x3e1, c);
-};
 const foo = d(0x567, 0x568);
 function b(c, d) {
     b = function (e, f) {
@@ -1317,14 +1314,17 @@ function b(c, d) {
     return b(c, d);
 }
 function test() {
-    const e = function (c, g) {
-        return b(c - 0x396, g);
-    };
-    const f = function (c, g) {
-        return b(c - 0x396, g);
-    };
     const c = e(0x51c, 0x51b);
+    function e (c, g) {
+        return b(c - 0x396, g);
+    }
     console[f(0x51b, 0x51d)](foo, c);
+    function f (c, g) {
+        return b(c - 0x396, g);
+    }
+}
+function d (c, g) {
+    return b(g - 0x3e1, c);
 }
 test();
 ```

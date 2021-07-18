@@ -7,18 +7,19 @@ import { NO_ADDITIONAL_NODES_PRESET } from '../../src/options/presets/NoCustomNo
 
     let obfuscationResult = JavaScriptObfuscator.obfuscate(
         `
-            console.log('foo');
-            console.log('bar');
-            console.log('bar');
+             var object = {
+                b: 'field',
+                bar: 'value'
+             };
         `,
         {
             ...NO_ADDITIONAL_NODES_PRESET,
             compact: false,
             simplify: false,
-            stringArray: true,
-            stringArrayThreshold: 1,
-            stringArrayEncoding: ['base64'],
-            identifierNamesGenerator: 'mangled'
+            renameProperties: true,
+            renamePropertiesMode: 'safe',
+            identifierNamesGenerator: 'mangled',
+            reservedNames: ['^a$']
         }
     );
 
